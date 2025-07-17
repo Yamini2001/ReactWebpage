@@ -1,0 +1,116 @@
+/* Login.css */
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f3f4f6;
+  height: 100vh;
+}
+
+.login-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(to right, #4b006e, #8e2de2);
+}
+
+.login-box {
+  background-color: white;
+  padding: 60px 50px;
+  border-radius: 30px;
+  width: 450px; /* Increased width */
+  max-width: 95%;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  text-align: left;
+}
+
+.login-icon {
+  font-size: 120px; /* Adjusted to fit layout better */
+  color: #7b2cbf;
+  margin-bottom: 55px;
+  display: inline-flex;
+  text-align: center;
+  
+}
+
+.login-title {
+  font-size: 36px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.login-subtitle {
+  font-size: 16px;
+  color: #777;
+  margin-bottom: 30px;
+}
+
+.login-form {
+  /* text-align: left; */
+  width: 550px;
+  margin-left: -10px;
+}
+.logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1rem; /* Same as mb-4 */
+}
+
+.logo svg {
+  font-size: 15px;             /* text-[70px] */
+  color: white;                /* text-white */
+  background-color: #9333ea;   /* bg-purple-600 */
+  padding: 12px;               /* p-3 = 0.75rem = 12px */
+  border-radius: 9999px;       /* rounded-full */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); /* Tailwind shadow */
+}
+
+
+.login-label {
+  display: block;
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: #333;
+  margin-left: 2px;
+}
+
+.login-input {
+  width: 100%;
+  padding: 16px 18px;
+  font-size: 18px;
+  margin-bottom: 25px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  outline: none;
+  box-sizing: border-box;
+
+  /* 👇 This shifts only input fields left */
+  transform: translateX(-52px);
+}
+
+.login-button {
+  width: 100%;
+  padding: 16px;
+  background-color: #7e22ce;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 10px;
+}
+.login-button:hover {
+  background-color: #5e16a1;
+}
+
+.login-demo {
+  font-size: 13px;
+  margin-top: 30px;
+  color: #555;
+}

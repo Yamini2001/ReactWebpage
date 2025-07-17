@@ -1,0 +1,82 @@
+
+/* Center the entire login box on the screen */
+.login-container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f3f4f6; /* Tailwind's gray-100 */
+}
+
+/* Style the login box */
+.login-box {
+  background-color: white;
+  color: black;
+  border-radius: 25px;
+  padding: 2.5rem;
+  width: 400px;
+  height: 500px;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+  border: 1px solid #d1d5db; /* Tailwind's gray-300 */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+/* Style the user icon */
+.user-icon {
+  background-color: #9333ea; /* Tailwind's purple-600 */
+  color: white;
+  font-size: 40px;
+  padding: 1.25rem;
+  border-radius: 9999px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  margin: 0 auto 1.5rem auto;
+}
+
+/* Headings */
+.login-box h1 {
+  text-align: center;
+  font-size: 1.875rem;
+  font-weight: bold;
+  margin-bottom: 0.75rem;
+}
+
+.login-box p {
+  text-align: center;
+  font-size: 0.875rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Inputs */
+.login-form input {
+  width: 80%;
+  padding: 0.75rem;
+  margin: 0 auto 1rem auto;
+  border-radius: 0.5rem;
+  border: 1px solid #d1d5db;
+  outline: none;
+  display: block;
+  color: black;
+}
+
+.login-form input::placeholder {
+  color: #6b7280; /* Tailwind's gray-500 */
+}
+
+/* Button */
+.login-form button {
+  width: 80%;
+  margin: 0 auto;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  background: linear-gradient(to right, #3b82f6, #9333ea); /* blue-500 to purple-600 */
+  color: white;
+  transition: opacity 0.3s ease;
+}
+
+.login-form button:hover {
+  opacity: 0.9;
+}

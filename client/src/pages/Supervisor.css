@@ -1,0 +1,98 @@
+/* Supervisor.css */
+
+.supervisor-container {
+  padding: 24px 16px;
+  min-height: 100vh;
+  background-color: #f3f4f6;
+  font-family: Arial, sans-serif;
+}
+
+.supervisor-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #ffffff;
+  padding: 12px 20px;
+  border-radius: 8px;
+  margin-bottom: 24px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.back-btn,
+.logout-btn {
+  background: none;
+  border: none;
+  font-size: 14px;
+  color: #4b5563;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.back-btn:hover,
+.logout-btn:hover {
+  color: #111827;
+}
+
+.header-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #111827;
+}
+.logout-btn{
+    display: flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  color: #4b5563;
+  cursor: pointer;
+  font-size: 14px;
+  transition: color 0.3s ease;
+}
+
+.employee-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.employee-card {
+  background-color: #ffffff;
+  padding: 16px 20px;
+  border-radius: 10px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background 0.2s ease;
+}
+
+.employee-card:hover {
+  background-color: #f9fafb;
+}
+
+.employee-name {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
+  color: #1f2937;
+}
+
+.employee-status {
+  font-size: 14px;
+  color: #6b7280;
+  margin-top: 4px;
+}
+
+.arrow {
+  font-size: 20px;
+  color: #9ca3af;
+}
+
+.loading-text,
+.error-text,
+.no-employees {
+  font-size: 16px;
+  color: #6b7280;
+}
