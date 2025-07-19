@@ -1,91 +1,88 @@
 /* Admin.css */
 
-.admin-container {
-  min-height: 100vh;
-  background-color: #f3f4f6;
-  padding: 24px 16px;
-  font-family: Arial, sans-serif;
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f4f6f8;
 }
 
-.admin-wrapper {
-  max-width: 1168px;
-  margin: 0 auto;
+.container {
+  max-width: 1300px;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
 }
 
-.admin-header {
+.header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 24px;
+  margin-bottom: 30px;
 }
 
-.admin-title {
-  font-size: 24px;
+.head {
+  font-size: 28px;
   font-weight: bold;
   color: #1f2937;
 }
 
-.logout-button {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  background: none;
+.logout-btn {
+  background-color: transparent;
   border: none;
-  color: #4b5563;
+  color: #6b7280;
+  font-size: 16px;
   cursor: pointer;
-  font-size: 14px;
   transition: color 0.3s ease;
 }
 
-.logout-button:hover {
-  color: #dc2626;
+.logout-btn:hover {
+  color: #ef4444;
 }
 
-.logout-icon {
-  font-size: 18px;
+.district-section {
+  margin-bottom: 30px;
 }
 
-.card-list {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+.district-section h3 {
+  font-size: 22px;
+  color: #111827;
+  margin-bottom: 10px;
+  border-left: 4px solid #6366f1;
+  padding-left: 10px;
 }
 
-.card {
-  background-color: #ffffff;
-  border-radius: 12px;
-  padding: 20px 24px;
+.employee-list {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.employee-item {
+  background-color: #f9fafb;
+  padding: 10px 15px;
+  margin-bottom: 8px;
+  border-radius: 8px;
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
-  transition: box-shadow 0.2s ease;
-  cursor: pointer;
+  flex-wrap: wrap;
+  color: #374151;
+  font-size: 15px;
+  border: 1px solid #e5e7eb;
+  transition: background-color 0.3s ease;
 }
 
-.card:hover {
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+.employee-item:hover {
+  background-color: #eef2ff;
 }
 
-.card-title {
-  font-size: 18px;
-  font-weight: 600;
-  color: #1f2937;
-  margin: 0;
+.employee-item a {
+  color: #4f46e5;
+  text-decoration: none;
+  font-weight: 500;
 }
 
-.card-subtitle {
-  font-size: 14px;
-  color: #6b7280;
-  margin-top: 4px;
-}
-
-.card-icon {
-  font-size: 20px;
-  color: #9ca3af;
-}
-
-.no-supervisors {
-  color: #6b7280;
-  font-size: 16px;
+.employee-item a:hover {
+  text-decoration: underline;
 }

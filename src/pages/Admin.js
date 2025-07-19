@@ -1,49 +1,61 @@
-// src/pages/Admin.js
+// src/components/Admin.js
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './Supervisor.css'; // Or Admin.css
+import './Admin.css';
 
 const Admin = () => {
-  const [employees, setEmployees] = useState([]);
+  const [files, setFiles] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchFiles = async () => {
       try {
-        const res = await fetch('http://localhost:4000/api/employees');
+        const res = await fetch('http://localhost:4000/api/documents');
+
+        if (!res.ok) {
+          const errorHtml = await res.text();
+          console.error('Server error:', res.status, errorHtml);
+          return;
+        }
+
         const data = await res.json();
-        setEmployees(data);
-      } catch (err) {
-        console.error('Failed to fetch employee data:', err);
+        setFiles(data);
+      } catch (error) {
+        console.error('Failed to fetch files:', error);
       }
     };
-
-    fetchData();
+    fetchFiles();
   }, []);
 
-  // Group employees by district
-  const grouped = employees.reduce((acc, emp) => {
-    const key = emp.district.toLowerCase();
+  const handleLogout = () => {
+    navigate('/login');
+  };
+
+  const grouped = files.reduce((acc, file) => {
+    const key = file.district?.toLowerCase();
+    if (!key) return acc;
     if (!acc[key]) acc[key] = [];
-    acc[key].push(emp);
+    acc[key].push(file);
     return acc;
   }, {});
 
+  const districts = ['mahendergarh', 'narnaul', 'rewari'];
+
   return (
     <div className="container">
-      <h2 className="header-title">Admin Panel – Supervisor Documents</h2>
+      <div className="header">
+        <h2 className="head">Admin Panel – Supervisor Documents</h2>
+        <button onClick={handleLogout} className="logout-btn">↩ Logout</button>
+      </div>
 
-      {['mahendergarh', 'narnaul', 'rewari'].map((district) => (
+      {districts.map((district) => (
         <div key={district} className="district-section">
           <h3>{district.charAt(0).toUpperCase() + district.slice(1)}</h3>
           <ul className="employee-list">
-            {(grouped[district] || []).map((emp) => (
-              <li
-                key={emp.id}
-                onClick={() => navigate(`/supervisor/${emp.id}`)}
-                className="employee-item"
-              >
-                {emp.name}
+            {(grouped[district] || []).map((file) => (
+              <li key={file.id} className="employee-item">
+                {file.name} – {file.section} –{' '}
+                <a href={file.url} target="_blank" rel="noreferrer">View</a>
               </li>
             ))}
           </ul>

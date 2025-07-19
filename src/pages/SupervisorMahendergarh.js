@@ -1,40 +1,75 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaEye, FaTrash, FaUpload } from 'react-icons/fa';
 import './SupervisorMahendergarh.css';
 
-export default function SupervisorNarnaul() {
+export default function SupervisorMahendergarh() {
   const navigate = useNavigate();
-
-  const [files, setFiles] = useState({
-    Sales: [],
-    Client: [],
-  });
-
   const [uploadSection, setUploadSection] = useState('Sales');
+  const [files, setFiles] = useState([]);
 
-  const viewFile = (file) => {
-    const fileURL = URL.createObjectURL(file);
-    window.open(fileURL, '_blank');
-  };
-
-  const deleteFile = (section, fileToDelete) => {
-    if (window.confirm(`Delete "${fileToDelete.name}"?`)) {
-      setFiles((prev) => ({
-        ...prev,
-        [section]: prev[section].filter((file) => file.name !== fileToDelete.name),
-      }));
+  const fetchFiles = async () => {
+    try {
+      const res = await fetch('http://localhost:4000/api/documents');
+      const data = await res.json();
+      const filtered = data.filter(
+        (f) => f.district?.toLowerCase() === 'mahendergarh'
+      );
+      setFiles(filtered);
+    } catch (error) {
+      console.error('Failed to fetch files:', error);
     }
   };
 
-  const handleUpload = (e) => {
+  useEffect(() => {
+    fetchFiles();
+  }, []);
+
+  const handleUpload = async (e) => {
     const file = e.target.files[0];
     if (file) {
-      setFiles((prev) => ({
-        ...prev,
-        [uploadSection]: [...prev[uploadSection], file],
-      }));
-      alert(`${file.name} uploaded to ${uploadSection}.`);
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('section', uploadSection);
+      formData.append('district', 'mahendergarh');
+
+      try {
+        const res = await fetch('http://localhost:4000/api/documents/upload', {
+          method: 'POST',
+          body: formData,
+        });
+
+        const contentType = res.headers.get('content-type');
+        if (contentType && contentType.includes('application/json')) {
+          const data = await res.json();
+          console.log('Uploaded file:', data); // For debug
+          alert('File uploaded!');
+          fetchFiles(); // Refresh list
+        } else {
+          const text = await res.text();
+          console.error('Unexpected response:', text);
+          alert('Upload failed: Server returned non-JSON response.');
+        }
+      } catch (err) {
+        console.error('Upload failed:', err);
+      }
+    }
+  };
+
+  const viewFile = (file) => {
+    window.open(file.url, '_blank');
+  };
+
+  const deleteFile = async (id) => {
+    if (window.confirm('Are you sure to delete this file?')) {
+      try {
+        await fetch(`http://localhost:4000/api/documents/${id}`, {
+          method: 'DELETE',
+        });
+        fetchFiles();
+      } catch (error) {
+        console.error('Delete failed:', error);
+      }
     }
   };
 
@@ -42,15 +77,11 @@ export default function SupervisorNarnaul() {
 
   return (
     <div className="container">
-      {/* Header */}
       <div className="header">
-        <h1 className='head'>Mahendergarh Supervisor Dashboard</h1>
-        <button onClick={handleLogout} className="logout-btn">
-          ↩ Logout
-        </button>
+        <h1 className="head">Mahendergarh Supervisor Dashboard</h1>
+        <button onClick={handleLogout} className="logout-btn">↩ Logout</button>
       </div>
 
-      {/* Upload Section */}
       <div className="upload-section">
         <select
           value={uploadSection}
@@ -61,49 +92,28 @@ export default function SupervisorNarnaul() {
           <option value="Client">Client</option>
         </select>
 
-        <div style={{ marginTop: '16px' }}>
-          <input type="file" id="fileUpload" onChange={handleUpload} style={{ display: 'none' }} />
-          <button
-            onClick={() => document.getElementById('fileUpload').click()}
-            className="upload-btn"
-          >
-            <FaUpload />
-            Upload New Data
-          </button>
+        <input type="file" id="fileUpload" onChange={handleUpload} hidden />
+        <button onClick={() => document.getElementById('fileUpload').click()} className="upload-btn">
+          <FaUpload /> Upload New Data
+        </button>
+      </div>
+
+      {['Sales', 'Client'].map((section) => (
+        <div className="section-box" key={section}>
+          <h2>{section}</h2>
+          {files
+            .filter((f) => f.section === section)
+            .map((file) => (
+              <div key={file.id} className="file-item">
+                <span>{file.name}</span>
+                <div className="icon-group">
+                  <FaEye className="view" title="View" onClick={() => viewFile(file)} />
+                  <FaTrash className="delete" title="Delete" onClick={() => deleteFile(file.id)} />
+                </div>
+              </div>
+            ))}
         </div>
-      </div>
-
-      {/* Equipment Section */}
-      <div className="section-box">
-        <h2>Sales Report Q1</h2>
-        <p>Revenue increased by 15%</p>
-        <p className="documents-label">📄 Documents</p>
-        {files.Sales.map((file, i) => (
-          <div key={i} className="file-item">
-            <span>{file.name}</span>
-            <div className="icon-group">
-              <FaEye className="view" title="View" onClick={() => viewFile(file)} />
-              <FaTrash className="delete" title="Delete" onClick={() => deleteFile('Sales', file)} />
-            </div>
-          </div>
-        ))}
-      </div>
-
-      {/* Installation Section */}
-      <div className="section-box">
-        <h2>Client Database</h2>
-        <p>Updated contact information</p>
-        <p className="documents-label">📄 Documents</p>
-        {files.Client.map((file, i) => (
-          <div key={i} className="file-item">
-            <span>{file.name}</span>
-            <div className="icon-group">
-              <FaEye className="view" title="View" onClick={() => viewFile(file)} />
-              <FaTrash className="delete" title="Delete" onClick={() => deleteFile('Client', file)} />
-            </div>
-          </div>
-        ))}
-      </div>
+      ))}
     </div>
   );
 }
