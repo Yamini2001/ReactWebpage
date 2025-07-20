@@ -57,7 +57,8 @@ body {
   cursor: pointer;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 50px;
+  margin-left:20px;
 }
 
 .upload-btn:hover {

@@ -1,117 +1,127 @@
-/* dashboard.css */
+/* SupervisorRewari.css */
+
 body {
-  font-family: sans-serif;
-  background-color: #f9fbfc;
   margin: 0;
   padding: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f4f6f8;
 }
 
 .container {
-  min-height: 100vh;
-  padding: 24px;
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
 }
 
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 24px;
+  margin-bottom: 30px;
 }
 
-.header h1 {
-  font-size: 20px;
+.head {
+  font-size: 28px;
   font-weight: bold;
+  color: #1f2937;
 }
 
 .logout-btn {
-  font-size: 14px;
-  color: gray;
-  cursor: pointer;
-  border: none;
   background: none;
+  border: none;
+  color: #666;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 5px;
 }
 
 .logout-btn:hover {
   color: red;
 }
 
+/* Upload section */
 .upload-section {
-  padding: 24px;
+  margin-bottom: 30px;
+}
+
+.upload-controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 .select-section {
-  padding: 8px 12px;
-  border: 1px solid #ccc;
+  padding: 8px;
   border-radius: 6px;
+  border: 1px solid #ccc;
+  min-width: 150px;
 }
 
 .upload-btn {
-  background-color: #0ea5e9;
-  color: white;
-  padding: 10px 16px;
-  border-radius: 6px;
-  border: none;
-  cursor: pointer;
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
+  background-color: #3498db;
+  color: white;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 .upload-btn:hover {
-  background-color: #0284c7;
+  background-color: #2980b9;
 }
 
+/* File Sections */
 .section-box {
-  background-color: white;
-  padding: 24px;
-  border-radius: 10px;
-  max-width: 1168px;
-  margin: 0 auto 32px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+  padding: 16px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
 }
 
 .section-box h2 {
-  font-size: 18px;
-  font-weight: 600;
-}
-
-.section-box p {
-  font-size: 14px;
-  color: #6b7280;
-  margin-bottom: 12px;
+  margin-bottom: 4px;
+  font-size: 20px;
 }
 
 .documents-label {
-  font-weight: 500;
-  margin-bottom: 8px;
-  color: #374151;
+  font-weight: bold;
+  margin-top: 10px;
+  color: #333;
 }
 
+/* Document Items */
 .file-item {
-  background-color: #f3f4f6;
-  border-radius: 6px;
-  padding: 10px 16px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 8px;
-}
-
-.file-item span {
-  font-size: 14px;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 10px 15px;
+  margin-top: 10px;
 }
 
 .icon-group {
   display: flex;
-  gap: 12px;
-  font-size: 16px;
+  gap: 15px;
+}
+
+.view {
+  color: #2ecc71;
   cursor: pointer;
 }
 
-.icon-group .view {
-  color: #2563eb;
-}
-
-.icon-group .delete {
-  color: #ef4444;
+.delete {
+  color: #e74c3c;
+  cursor: pointer;
 }

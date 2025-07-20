@@ -86,31 +86,31 @@ export default function SupervisorNarnaul() {
 
       {/* Upload Section */}
       <div className="upload-section">
-        <select
-          value={uploadSection}
-          onChange={(e) => setUploadSection(e.target.value)}
-          className="select-section"
-        >
-          <option value="Maintenance">Equipment</option>
-          <option value="Updates">Installation</option>
-        </select>
+  <div className="upload-controls">
+    <select
+      value={uploadSection}
+      onChange={(e) => setUploadSection(e.target.value)}
+      className="select-section"
+    >
+      <option value="Equipment">Equipment</option>
+      <option value="Installation">Installation</option>
+    </select>
 
-        <div style={{ marginTop: '16px' }}>
-          <input
-            type="file"
-            id="fileUpload"
-            onChange={handleUpload}
-            style={{ display: 'none' }}
-          />
-          <button
-            onClick={() => document.getElementById('fileUpload').click()}
-            className="upload-btn"
-          >
-            <FaUpload />
-            Upload New Data
-          </button>
-        </div>
-      </div>
+    <input
+      type="file"
+      id="fileUpload"
+      onChange={handleUpload}
+      style={{ display: 'none' }}
+    />
+    <button
+      onClick={() => document.getElementById('fileUpload').click()}
+      className="upload-btn"
+    >
+      <FaUpload style={{ marginRight: '6px' }} />
+      Upload New Data
+    </button>
+  </div>
+</div>
 
       {/* Maintenance Section */}
       <div className="section-box">
