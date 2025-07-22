@@ -12,8 +12,10 @@ export default function SupervisorNarnaul() {
   const fetchFiles = async () => {
     try {
       const res = await fetch('http://localhost:4000/api/documents');
-      const data = await res.json();
-      const filtered = data.filter((file) => file.district === 'narnaul');
+       const data = await res.json();
+      const filtered = data.filter(
+        (f) => f.district?.toLowerCase() === 'narnaul'
+      );
       setFiles(filtered);
     } catch (error) {
       console.error('Failed to fetch files:', error);
@@ -24,13 +26,14 @@ export default function SupervisorNarnaul() {
     fetchFiles();
   }, []);
 
-  const handleUpload = async (e) => {
+ const handleUpload = async (e) => {
     const file = e.target.files[0];
     if (file) {
       const formData = new FormData();
       formData.append('file', file);
       formData.append('section', uploadSection);
       formData.append('district', 'narnaul');
+
 
       try {
         const res = await fetch('http://localhost:4000/api/documents/upload', {
@@ -39,18 +42,18 @@ export default function SupervisorNarnaul() {
         });
 
         const contentType = res.headers.get('content-type');
-        if (contentType.includes('application/json')) {
+       if (contentType && contentType.includes('application/json')) {
           const data = await res.json();
+          console.log('Uploaded file:', data); // For debug
           alert('File uploaded!');
-          fetchFiles();
+          fetchFiles(); // Refresh list
         } else {
           const text = await res.text();
-          console.error('Upload error:', text);
-          alert('Upload failed: Unexpected response');
+          console.error('Unexpected response:', text);
+          alert('Upload failed: Server returned non-JSON response.');
         }
       } catch (err) {
-        console.error('Upload error:', err);
-        alert('Upload failed');
+        console.error('Upload failed:', err);
       }
     }
   };
@@ -112,41 +115,22 @@ export default function SupervisorNarnaul() {
   </div>
 </div>
 
-      {/* Maintenance Section */}
-      <div className="section-box">
-        <h2>Server Maintenance</h2>
-        <p>Monthly server backup completed</p>
-        <p className="documents-label">📄 Documents</p>
-        {files
-          .filter((file) => file.section === 'Maintenance')
-          .map((file, i) => (
-            <div key={i} className="file-item">
-              <span>{file.name}</span>
-              <div className="icon-group">
-                <FaEye className="view" onClick={() => viewFile(file)} />
-                <FaTrash className="delete" onClick={() => deleteFile(file.id)} />
-              </div>
-            </div>
-          ))}
-      </div>
-
-      {/* Updates Section */}
-      <div className="section-box">
-        <h2>Software Updates</h2>
-        <p>All systems updated to latest version</p>
-        <p className="documents-label">📄 Documents</p>
-        {files
-          .filter((file) => file.section === 'Updates')
-          .map((file, i) => (
-            <div key={i} className="file-item">
-              <span>{file.name}</span>
-              <div className="icon-group">
-                <FaEye className="view" onClick={() => viewFile(file)} />
-                <FaTrash className="delete" onClick={() => deleteFile(file.id)} />
-              </div>
-            </div>
-          ))}
-      </div>
-    </div>
-  );
-}
+     {['Maintenance', 'Updates'].map((section) => (
+             <div className="section-box" key={section}>
+               <h2>{section}</h2>
+               {files
+                 .filter((f) => f.section === section)
+                 .map((file) => (
+                   <div key={file.id} className="file-item">
+                     <span>{file.name}</span>
+                     <div className="icon-group">
+                       <FaEye className="view" title="View" onClick={() => viewFile(file)} />
+                       <FaTrash className="delete" title="Delete" onClick={() => deleteFile(file.id)} />
+                     </div>
+                   </div>
+                 ))}
+             </div>
+           ))}
+         </div>
+       );
+     }

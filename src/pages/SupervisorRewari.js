@@ -3,17 +3,17 @@ import { useNavigate } from 'react-router-dom';
 import { FaEye, FaTrash, FaUpload } from 'react-icons/fa';
 import './SupervisorRewari.css';
 
-export default function SupervisorNarnaul() {
+export default function SupervisorRewari() {
   const navigate = useNavigate();
   const [uploadSection, setUploadSection] = useState('Equipment');
   const [files, setFiles] = useState([]);
 
-  // Fetch Narnaul files from server
+  // ✅ Fetch only Rewari files from server
   const fetchFiles = async () => {
     try {
       const res = await fetch('http://localhost:4000/api/documents');
       const data = await res.json();
-      const filtered = data.filter((file) => file.district === 'rewari');
+      const filtered = data.filter(file => file.district?.toLowerCase() === "rewari");
       setFiles(filtered);
     } catch (error) {
       console.error('Failed to fetch files:', error);
@@ -39,18 +39,18 @@ export default function SupervisorNarnaul() {
         });
 
         const contentType = res.headers.get('content-type');
-        if (contentType.includes('application/json')) {
+        if (contentType && contentType.includes('application/json')) {
           const data = await res.json();
+          console.log('Uploaded file:', data); // For debug
           alert('File uploaded!');
-          fetchFiles();
+          fetchFiles(); // Refresh list
         } else {
           const text = await res.text();
-          console.error('Upload error:', text);
-          alert('Upload failed: Unexpected response');
+          console.error('Unexpected response:', text);
+          alert('Upload failed: Server returned non-JSON response.');
         }
       } catch (err) {
-        console.error('Upload error:', err);
-        alert('Upload failed');
+        console.error('Upload failed:', err);
       }
     }
   };
@@ -86,67 +86,49 @@ export default function SupervisorNarnaul() {
 
       {/* Upload Section */}
       <div className="upload-section">
-  <div className="upload-controls">
-    <select
-      value={uploadSection}
-      onChange={(e) => setUploadSection(e.target.value)}
-      className="select-section"
-    >
-      <option value="Equipment">Equipment</option>
-      <option value="Installation">Installation</option>
-    </select>
+        <div className="upload-controls">
+          <select
+            value={uploadSection}
+            onChange={(e) => setUploadSection(e.target.value)}
+            className="select-section"
+          >
+            <option value="Equipment">Equipment</option>
+            <option value="Installation">Installation</option>
+          </select>
 
-    <input
-      type="file"
-      id="fileUpload"
-      onChange={handleUpload}
-      style={{ display: 'none' }}
-    />
-    <button
-      onClick={() => document.getElementById('fileUpload').click()}
-      className="upload-btn"
-    >
-      <FaUpload style={{ marginRight: '6px' }} />
-      Upload New Data
-    </button>
-  </div>
-</div>
-
-      {/* Maintenance Section */}
-      <div className="section-box">
-        <h2>Equipment Check</h2>
-        <p>All machinery running smoothly</p>
-        <p className="documents-label">📄 Documents</p>
-        {files
-          .filter((file) => file.section === 'Equipment')
-          .map((file, i) => (
-            <div key={i} className="file-item">
-              <span>{file.name}</span>
-              <div className="icon-group">
-                <FaEye className="view" onClick={() => viewFile(file)} />
-                <FaTrash className="delete" onClick={() => deleteFile(file.id)} />
-              </div>
-            </div>
-          ))}
+          <input
+            type="file"
+            id="fileUpload"
+            onChange={handleUpload}
+            style={{ display: 'none' }}
+          />
+          <button
+            onClick={() => document.getElementById('fileUpload').click()}
+            className="upload-btn"
+          >
+            <FaUpload style={{ marginRight: '6px' }} />
+            Upload New Data
+          </button>
+        </div>
       </div>
 
-      {/* Updates Section */}
-      <div className="section-box">
-        <h2>New Installation</h2>
-        <p>CNC machine installed successfully</p>
-        <p className="documents-label">📄 Documents</p>
-        {files
-          .filter((file) => file.section === 'Installation')
-          .map((file, i) => (
-            <div key={i} className="file-item">
-              <span>{file.name}</span>
-              <div className="icon-group">
-                <FaEye className="view" onClick={() => viewFile(file)} />
-                <FaTrash className="delete" onClick={() => deleteFile(file.id)} />
+      {/* Display Uploaded Files */}
+      {['Equipment', 'Installation'].map((section) => (
+        <div className="section-box" key={section}>
+          <h2>{section}</h2>
+          {files
+            .filter((f) => f.section === section)
+            .map((file) => (
+              <div key={file.id} className="file-item">
+                <span>{file.name}</span>
+                <div className="icon-group">
+                  <FaEye className="view" title="View" onClick={() => viewFile(file)} />
+                  <FaTrash className="delete" title="Delete" onClick={() => deleteFile(file.id)} />
+                </div>
               </div>
-            </div>
-          ))}
-      </div>
+            ))}
+        </div>
+      ))}
     </div>
   );
 }
